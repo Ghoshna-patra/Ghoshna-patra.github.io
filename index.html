@@ -2,7 +2,7 @@
 <html lang="hi">
 <head>
   <meta charset="utf-8">
-  <title>Hindi Self-Declaration Form</title>
+  <title>ghoshna patra घोषणापत्र</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" type="image/x-icon" href="favicon.ico">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -28,11 +28,10 @@
   }
 }
 </script>
-<link rel="stylesheet" href="/index.css">
 </head>
-<body class="bg-slate-100">
+<body class="bg-slate-100 flex flex-col min-h-screen">
   
-<div class="min-h-screen flex flex-col items-center justify-center p-4 font-sans">
+<main class="flex-grow flex flex-col items-center justify-center p-4 font-sans">
   <div class="w-full max-w-5xl bg-white rounded-2xl shadow-lg p-6 md:p-10 transition-all duration-300">
     
     <div id="form-view">
@@ -244,7 +243,13 @@
         </div>
     </div>
   </div>
-</div>
+</main>
+
+<footer class="w-full text-center py-4">
+  <a href="घोषणापत्र.pdf" target="_blank" rel="noopener noreferrer" class="text-indigo-600 hover:underline text-sm">
+    मूल घोषणापत्र PDF डाउनलोड करें
+  </a>
+</footer>
 
 <script type="module">
   import jsPDF from 'jspdf';
@@ -412,6 +417,5 @@
 
 </script>
 
-<script type="module" src="/index.tsx"></script>
 </body>
 </html>
