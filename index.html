@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="utf-8">
+  <title>Hindi Self-Declaration Form</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@400;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Noto Sans Devanagari', 'sans-serif'],
+          },
+        },
+      },
+    }
+  </script>
+<script type="importmap">
+{
+  "imports": {
+    "jspdf": "https://esm.sh/jspdf@2.5.1",
+    "html2canvas": "https://esm.sh/html2canvas@1.4.1"
+  }
+}
+</script>
+<link rel="stylesheet" href="/index.css">
+</head>
+<body class="bg-slate-100">
+  
+<div class="min-h-screen flex flex-col items-center justify-center p-4 font-sans">
+  <div class="w-full max-w-5xl bg-white rounded-2xl shadow-lg p-6 md:p-10 transition-all duration-300">
+    
+    <div id="form-view">
+      <div class="text-center mb-8">
+        <h1 class="text-3xl font-bold text-gray-800">स्वप्रमाणित घोषणा पत्र</h1>
+        <p class="text-lg text-gray-600 mt-2">आय/जाति/निवास प्रमाण - पत्र हेतु</p>
+      </div>
+
+      <form id="declarationForm" novalidate>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6">
+          <div class="md:col-span-2">
+            <label for="reasonForCertificate" class="block text-sm font-medium text-gray-700">प्रमाण पत्र बनवाने का कारण</label>
+            <input type="text" id="reasonForCertificate" name="reasonForCertificate" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" required>
+            <p class="error-message mt-1 text-xs text-red-600 hidden">यह फ़ील्ड आवश्यक है।</p>
+          </div>
+          <div class="md:col-span-2">
+            <label for="aadharNo" class="block text-sm font-medium text-gray-700">आधार न.</label>
+            <input type="text" id="aadharNo" name="aadharNo" placeholder="xxxxxxxxxxxx" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" required pattern="^[0-9]{12}$">
+             <div class="error-message mt-1 text-xs text-red-600 hidden">
+                <span data-validator="required">यह फ़ील्ड आवश्यक है।</span>
+                <span data-validator="pattern">कृपया 12 अंकों का वैध आधार नंबर दर्ज करें।</span>
+             </div>
+          </div>
+          
+          <div>
+            <label for="applicantName" class="block text-sm font-medium text-gray-700">मैं (आवेदक का नाम)</label>
+            <input type="text" id="applicantName" name="applicantName" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" required>
+            <p class="error-message mt-1 text-xs text-red-600 hidden">यह फ़ील्ड आवश्यक है।</p>
+          </div>
+          <div>
+            <label for="relationName" class="block text-sm font-medium text-gray-700">पुत्र/पुत्री/पति श्री</label>
+            <input type="text" id="relationName" name="relationName" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" required>
+            <p class="error-message mt-1 text-xs text-red-600 hidden">यह फ़ील्ड आवश्यक है।</p>
+          </div>
+          <div>
+            <label for="motherName" class="block text-sm font-medium text-gray-700">माता श्रीमती</label>
+            <input type="text" id="motherName" name="motherName" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" required>
+            <p class="error-message mt-1 text-xs text-red-600 hidden">यह फ़ील्ड आवश्यक है।</p>
+          </div>
+           <div>
+            <label for="dob" class="block text-sm font-medium text-gray-700">जन्म तिथि</label>
+            <input type="date" id="dob" name="dob" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" required>
+            <p class="error-message mt-1 text-xs text-red-600 hidden">यह फ़ील्ड आवश्यक है।</p>
+          </div>
+          <div>
+            <label for="occupation" class="block text-sm font-medium text-gray-700">व्यवसाय</label>
+            <input type="text" id="occupation" name="occupation" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" required>
+            <p class="error-message mt-1 text-xs text-red-600 hidden">यह फ़ील्ड आवश्यक है।</p>
+          </div>
+          <div>
+            <label for="birthPlace" class="block text-sm font-medium text-gray-700">जन्म स्थान</label>
+            <input type="text" id="birthPlace" name="birthPlace" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" required>
+            <p class="error-message mt-1 text-xs text-red-600 hidden">यह फ़ील्ड आवश्यक है।</p>
+          </div>
+          <div>
+            <label for="caste" class="block text-sm font-medium text-gray-700">जाति</label>
+            <input type="text" id="caste" name="caste" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" required>
+            <p class="error-message mt-1 text-xs text-red-600 hidden">यह फ़ील्ड आवश्यक है।</p>
+          </div>
+          <div>
+            <label for="subCaste" class="block text-sm font-medium text-gray-700">उपजाति</label>
+            <input type="text" id="subCaste" name="subCaste" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
+          </div>
+
+          <div class="md:col-span-2">
+            <label for="residence" class="block text-sm font-medium text-gray-700">निवास</label>
+            <input type="text" id="residence" name="residence" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" required>
+            <p class="error-message mt-1 text-xs text-red-600 hidden">यह फ़ील्ड आवश्यक है।</p>
+          </div>
+
+          <div>
+            <label for="policeStation" class="block text-sm font-medium text-gray-700">थाना</label>
+            <input type="text" id="policeStation" name="policeStation" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" required>
+            <p class="error-message mt-1 text-xs text-red-600 hidden">यह फ़ील्ड आवश्यक है।</p>
+          </div>
+           <div>
+            <label for="tehsil" class="block text-sm font-medium text-gray-700">तहसील</label>
+            <input type="text" id="tehsil" name="tehsil" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" required>
+            <p class="error-message mt-1 text-xs text-red-600 hidden">यह फ़ील्ड आवश्यक है।</p>
+          </div>
+          <div>
+            <label for="district" class="block text-sm font-medium text-gray-700">जिला</label>
+            <input type="text" id="district" name="district" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" required>
+            <p class="error-message mt-1 text-xs text-red-600 hidden">यह फ़ील्ड आवश्यक है।</p>
+          </div>
+        </div>
+
+        <div class="mt-8 pt-6 border-t">
+          <p class="text-sm text-gray-600 leading-relaxed">
+            घोषणा करता/करती हूँ कि आवेदन पत्र मै दिए गये विवरण तथ्य एवं मेरी जानकारी विश्वास में शुध्द एवं सत्य है, मै मिथ्या/विवरण तथ्यों को देने के परिणामों से भलीभांति अवगत हूँ ! यदि आवेदन पत्र में दिए गये कोई विवरण/तथ्य मिथ्य पाए जाते है, तो मेरे विरुद्ध भा.द.वि. 1960 कि धारा - 199 व 200 एवं प्रभावी किसी अन्य विधि के अंतर्गत अभियोजन एवं दण्ड के लिए स्वयं उत्तर दायी होऊंगा/होउंगी।
+          </p>
+        </div>
+
+        <div class="mt-8 grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6">
+           <div>
+            <label for="place" class="block text-sm font-medium text-gray-700">स्थान</label>
+            <input type="text" id="place" name="place" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" required>
+            <p class="error-message mt-1 text-xs text-red-600 hidden">यह फ़ील्ड आवश्यक है।</p>
+          </div>
+          <div>
+            <label for="date" class="block text-sm font-medium text-gray-700">दिनांक</label>
+            <input type="date" id="date" name="date" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" required>
+            <p class="error-message mt-1 text-xs text-red-600 hidden">यह फ़ील्ड आवश्यक है।</p>
+          </div>
+          <div>
+            <label for="mobileNo" class="block text-sm font-medium text-gray-700">मोबाईल न.</label>
+            <input type="tel" id="mobileNo" name="mobileNo" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" required pattern="^[0-9]{10}$">
+            <div class="error-message mt-1 text-xs text-red-600 hidden">
+              <span data-validator="required">यह फ़ील्ड आवश्यक है।</span>
+              <span data-validator="pattern">कृपया 10 अंकों का वैध मोबाइल नंबर दर्ज करें।</span>
+            </div>
+          </div>
+          <div>
+            <label for="annualIncome" class="block text-sm font-medium text-gray-700">बार्षिक आय</label>
+            <input type="number" id="annualIncome" name="annualIncome" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" required pattern="^[0-9]+$">
+            <div class="error-message mt-1 text-xs text-red-600 hidden">
+              <span data-validator="required">यह फ़ील्ड आवश्यक है।</span>
+              <span data-validator="pattern">कृपया केवल अंक दर्ज करें।</span>
+            </div>
+          </div>
+        </div>
+        
+        <div class="mt-8 flex justify-end">
+            <button type="submit" class="inline-flex justify-center py-3 px-6 border border-transparent shadow-sm text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                जमा करें (Submit)
+            </button>
+        </div>
+      </form>
+    </div>
+    
+    <div id="success-view" class="hidden">
+      <!-- Success Message -->
+      <div class="text-center p-8">
+        <svg class="mx-auto h-16 w-16 text-green-500" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+        <h2 class="mt-4 text-2xl font-bold tracking-tight text-gray-900">आवेदन सफलतापूर्वक जमा किया गया!</h2>
+        <p class="mt-2 text-base text-gray-600">आपका घोषणा पत्र सफलतापूर्वक जमा हो गया है। अब आप PDF डाउनलोड कर सकते हैं।</p>
+        <div class="mt-8 flex justify-center gap-4">
+          <button id="generatePdfBtn" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">
+            पीडीएफ़ डाउनलोड करें
+          </button>
+          <button id="resetFormBtn" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+            नया फॉर्म भरें
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Hidden PDF Content -->
+  <div id="pdf-container" class="hidden">
+    <div id="pdf-content" class="absolute -left-[9999px] top-0 p-10 bg-white font-sans text-black" style="width: 210mm;">
+        <div class="flex justify-between items-start text-sm mb-4">
+            <span>प्रमाण पत्र बनवाने का कारण: <span class="font-bold" id="pdf-reasonForCertificate"></span></span>
+            <span>आधार न. <span class="font-bold" id="pdf-aadharNo"></span></span>
+        </div>
+        <div class="text-center my-6">
+            <h1 class="text-2xl font-bold underline">स्वप्रमाणित घोषणा पत्र</h1>
+            <p class="text-lg mt-1">आय/जाति/निवास प्रमाण - पत्र हेतु</p>
+        </div>
+
+        <div class="text-base leading-relaxed space-y-3">
+            <p>
+                मैं <span class="font-bold border-b border-dotted border-black px-2" id="pdf-applicantName"></span>
+                पुत्र/पुत्री पति श्री <span class="font-bold border-b border-dotted border-black px-2" id="pdf-relationName"></span>
+                माता श्रीमती <span class="font-bold border-b border-dotted border-black px-2" id="pdf-motherName"></span>
+            </p>
+            <p>
+                जन्म तिथि <span class="font-bold border-b border-dotted border-black px-2" id="pdf-dob"></span>
+                व्यवसाय <span class="font-bold border-b border-dotted border-black px-2" id="pdf-occupation"></span>
+                जन्म स्थान <span class="font-bold border-b border-dotted border-black px-2" id="pdf-birthPlace"></span>
+                जाति <span class="font-bold border-b border-dotted border-black px-2" id="pdf-caste"></span>
+            </p>
+            <p>
+                उपजाति <span class="font-bold border-b border-dotted border-black px-2" id="pdf-subCaste"></span>
+                निवास <span class="font-bold border-b border-dotted border-black px-2" id="pdf-residence"></span>
+            </p>
+              <p>
+                थाना <span class="font-bold border-b border-dotted border-black px-2" id="pdf-policeStation"></span>
+                तहसील <span class="font-bold border-b border-dotted border-black px-2" id="pdf-tehsil"></span>
+                जिला <span class="font-bold border-b border-dotted border-black px-2" id="pdf-district"></span>
+            </p>
+        </div>
+
+        <div class="my-6 pt-4 border-t border-black">
+            <p class="text-sm leading-relaxed">
+                घोषणा करता/करती हूँ कि आवेदन पत्र मै दिए गये विवरण तथ्य एवं मेरी जानकारी विश्वास में शुध्द एवं सत्य है, मै मिथ्या/विवरण तथ्यों को देने के परिणामों से भलीभांति अवगत हूँ ! यदि आवेदन पत्र में दिए गये कोई विवरण/तथ्य मिथ्य पाए जाते है, तो मेरे विरुद्ध भा.द.वि. 1960 कि धारा - 199 व 200 एवं प्रभावी किसी अन्य विधि के अंतर्गत अभियोजन एवं दण्ड के लिए स्वयं उत्तर दायी होऊंगा/होउंगी।
+            </p>
+        </div>
+        
+        <div class="mt-16 flex justify-between items-end text-sm">
+            <div>
+                <p>स्थान: <span class="font-bold" id="pdf-place"></span></p>
+                <p>दिनांक: <span class="font-bold" id="pdf-date"></span></p>
+            </div>
+            <div class="text-center">
+                <p class="border-b border-dotted border-black w-48 h-8"></p>
+                <p>आवेदक के हस्ताक्षर</p>
+            </div>
+        </div>
+        <div class="mt-4 flex justify-between items-end text-sm">
+            <div>
+                <p>मोबाईल न. <span class="font-bold" id="pdf-mobileNo"></span></p>
+            </div>
+            <div>
+                <p>बार्षिक आय: <span class="font-bold" id="pdf-annualIncome"></span></p>
+            </div>
+        </div>
+    </div>
+  </div>
+</div>
+
+<script type="module">
+  import jsPDF from 'jspdf';
+  import html2canvas from 'html2canvas';
+
+  const form = document.getElementById('declarationForm');
+  const formView = document.getElementById('form-view');
+  const successView = document.getElementById('success-view');
+  const generatePdfBtn = document.getElementById('generatePdfBtn');
+  const resetFormBtn = document.getElementById('resetFormBtn');
+  const dateInput = document.getElementById('date');
+
+  function getTodayDate() {
+    const today = new Date();
+    const day = String(today.getDate()).padStart(2, '0');
+    const month = String(today.getMonth() + 1).padStart(2, '0');
+    const year = today.getFullYear();
+    return `${year}-${month}-${day}`;
+  }
+  
+  function formatDateForDisplay(dateString) {
+    if (!dateString) return '';
+    const date = new Date(dateString);
+    if (isNaN(date.getTime())) {
+        return dateString;
+    }
+    const day = String(date.getDate()).padStart(2, '0');
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const year = date.getFullYear();
+    return `${day}/${month}/${year}`;
+  }
+
+  function validateForm() {
+    let isValid = true;
+    const inputs = form.querySelectorAll('input[required], input[pattern]');
+    
+    // Clear previous errors
+    form.querySelectorAll('.error-message').forEach(el => el.classList.add('hidden'));
+    form.querySelectorAll('.border-red-500').forEach(el => el.classList.remove('border-red-500'));
+    
+    for (const input of inputs) {
+      let inputValid = true;
+      const errorContainer = input.nextElementSibling;
+      
+      if (input.required && !input.value.trim()) {
+        isValid = false;
+        inputValid = false;
+        errorContainer.classList.remove('hidden');
+        if (errorContainer.querySelector('[data-validator="required"]')) {
+            errorContainer.querySelectorAll('span').forEach(s => s.classList.add('hidden'));
+            errorContainer.querySelector('[data-validator="required"]').classList.remove('hidden');
+        }
+      } else if (input.pattern && !new RegExp(input.pattern).test(input.value)) {
+        isValid = false;
+        inputValid = false;
+        errorContainer.classList.remove('hidden');
+        if (errorContainer.querySelector('[data-validator="pattern"]')) {
+             errorContainer.querySelectorAll('span').forEach(s => s.classList.add('hidden'));
+             errorContainer.querySelector('[data-validator="pattern"]').classList.remove('hidden');
+        }
+      }
+
+      if(!inputValid){
+        input.classList.add('border-red-500');
+      }
+    }
+
+    return isValid;
+  }
+  
+  function onSubmit(event) {
+    event.preventDefault();
+    const isFormValid = validateForm();
+    
+    if (isFormValid) {
+      console.log('Form Submitted');
+      const formData = new FormData(form);
+      const data = Object.fromEntries(formData.entries());
+      
+      // Populate PDF template
+      for(const key in data) {
+          const pdfElement = document.getElementById(`pdf-${key}`);
+          if(pdfElement){
+              if(key === 'dob' || key === 'date'){
+                pdfElement.textContent = formatDateForDisplay(data[key]);
+              } else {
+                pdfElement.textContent = data[key];
+              }
+          }
+      }
+
+      document.getElementById('pdf-container').classList.remove('hidden');
+      formView.classList.add('hidden');
+      successView.classList.remove('hidden');
+
+    } else {
+      console.log('Form is invalid');
+      const firstInvalidControl = form.querySelector('.border-red-500');
+      if (firstInvalidControl) {
+        firstInvalidControl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+    }
+  }
+
+  function resetForm() {
+    successView.classList.add('hidden');
+    formView.classList.remove('hidden');
+    document.getElementById('pdf-container').classList.add('hidden');
+    form.reset();
+    dateInput.value = getTodayDate();
+    form.querySelectorAll('.error-message').forEach(el => el.classList.add('hidden'));
+    form.querySelectorAll('.border-red-500').forEach(el => el.classList.remove('border-red-500'));
+  }
+
+  function generatePdf() {
+    const data = document.getElementById('pdf-content');
+    if (data) {
+      html2canvas(data, { scale: 2, useCORS: true }).then(canvas => {
+        const imgWidth = 210; 
+        const pageHeight = 297; 
+        const imgHeight = canvas.height * imgWidth / canvas.width;
+        let heightLeft = imgHeight;
+
+        const contentDataURL = canvas.toDataURL('image/png');
+        const pdf = new jsPDF('p', 'mm', 'a4');
+        let position = 0;
+        pdf.addImage(contentDataURL, 'PNG', 0, position, imgWidth, imgHeight);
+        heightLeft -= pageHeight;
+
+        while (heightLeft >= 0) {
+          position = heightLeft - imgHeight;
+          pdf.addPage();
+          pdf.addImage(contentDataURL, 'PNG', 0, position, imgWidth, imgHeight);
+          heightLeft -= pageHeight;
+        }
+        pdf.save('ghoshna-patra.pdf');
+      });
+    }
+  }
+  
+  // Set initial date and add listeners
+  dateInput.value = getTodayDate();
+  form.addEventListener('submit', onSubmit);
+  generatePdfBtn.addEventListener('click', generatePdf);
+  resetFormBtn.addEventListener('click', resetForm);
+  
+  // Add live validation feedback
+  form.querySelectorAll('input[required], input[pattern]').forEach(input => {
+    input.addEventListener('input', () => {
+      const errorContainer = input.nextElementSibling;
+      let inputValid = true;
+
+      if (input.required && !input.value.trim()) {
+        inputValid = false;
+      } else if (input.pattern && !new RegExp(input.pattern).test(input.value)) {
+        inputValid = false;
+      }
+
+      if (inputValid) {
+        input.classList.remove('border-red-500');
+        errorContainer.classList.add('hidden');
+      }
+    });
+  });
+
+</script>
+
+<script type="module" src="/index.tsx"></script>
+</body>
+</html>
